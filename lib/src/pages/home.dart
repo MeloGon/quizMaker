@@ -4,6 +4,8 @@ import 'package:quizmaker_app/src/pages/create_quizz.dart';
 import '../widgets/widgets.dart';
 
 class Home extends StatefulWidget {
+  final String userId;
+  Home(this.userId);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -25,7 +27,9 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CreateQuiz()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CreateQuiz(widget.userId)));
         },
       ),
     );

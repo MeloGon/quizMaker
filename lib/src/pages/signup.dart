@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/pages/signin.dart';
+import 'package:quizmaker_app/src/services/database.dart';
 import 'package:quizmaker_app/src/widgets/widgets.dart';
+import 'package:random_string/random_string.dart';
 
 import '../services/auth.dart';
-import '../services/auth.dart';
+
 import 'home.dart';
 
 class SignUp extends StatefulWidget {
@@ -13,8 +15,9 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-  String name, email, password;
+  String name, email, password, userId;
   AuthService authService = new AuthService();
+  DatabaseService databaseService = new DatabaseService();
   bool _isLoading = false;
 
   signUp() async {
@@ -22,17 +25,41 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         _isLoading = true;
       });
-      await authService.signUpWithEmailAndPass(email, password).then((value) {
-        if (value != null) {
-          setState(() {
-            _isLoading = false;
-          });
+      userId = randomAlphaNumeric(16);
+      Map<String, String> userMap = {
+        "password": password,
+        "type": "alumno",
+        "user": email,
+        "userId": userId,
+        "username": name,
+      };
+      await databaseService.createUser(userMap, userId).then((value) {
+        setState(() {
+          _isLoading = false;
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
-        }
+              context, MaterialPageRoute(builder: (context) => Home(userId)));
+        });
       });
     }
   }
+
+  //this kind of sifn up is if we work with firebase authentication
+  // signUp() async {
+  //   if (_formKey.currentState.validate()) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     await authService.signUpWithEmailAndPass(email, password).then((value) {
+  //       if (value != null) {
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //         Navigator.pushReplacement(
+  //             context, MaterialPageRoute(builder: (context) => Home()));
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +126,7 @@ class _SignUpState extends State<SignUp> {
                         width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () {
+                              //signUp();
                               signUp();
                             },
                             child: Text('Registrarse'))),

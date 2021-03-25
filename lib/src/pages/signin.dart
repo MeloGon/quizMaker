@@ -12,7 +12,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
-  String email, password;
+  String email, password, userId;
   AuthService authService = new AuthService();
   bool _isLoading = false;
 
@@ -27,7 +27,7 @@ class _SignInState extends State<SignIn> {
             _isLoading = false;
           });
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
+              context, MaterialPageRoute(builder: (context) => Home(userId)));
         }
       });
     }

@@ -38,7 +38,7 @@ android {
         applicationId "com.example.quizmaker_app"
         minSdkVersion 21
         targetSdkVersion 30
-        multiDexEnable true
+        //multiDexEnable true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
