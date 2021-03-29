@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/pages/signup.dart';
+import 'package:quizmaker_app/src/services/database.dart';
 import 'package:quizmaker_app/src/widgets/widgets.dart';
 
 import '../services/auth.dart';
@@ -14,21 +15,38 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   String email, password, userId;
   AuthService authService = new AuthService();
+  DatabaseService databaseService = new DatabaseService();
   bool _isLoading = false;
 
-  signIn() async {
+  // signIn() async {
+  //   if (_formKey.currentState.validate()) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     await authService.signInEmailAndPass(email, password).then((value) {
+  //       if (value != null) {
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //         Navigator.pushReplacement(
+  //             context, MaterialPageRoute(builder: (context) => Home(userId)));
+  //       }
+  //     });
+  //   }
+  // }
+
+  signIn(String email, String password) async {
     if (_formKey.currentState.validate()) {
       setState(() {
         _isLoading = true;
       });
-      await authService.signInEmailAndPass(email, password).then((value) {
-        if (value != null) {
-          setState(() {
-            _isLoading = false;
-          });
+
+      await databaseService.getUser(email, password).then((value) {
+        setState(() {
+          _isLoading = false;
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Home(userId)));
-        }
+        });
       });
     }
   }
@@ -94,7 +112,7 @@ class _SignInState extends State<SignIn> {
                         width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () {
-                              signIn();
+                              signIn(email, password);
                             },
                             child: Text('Ingresar'))),
                     SizedBox(

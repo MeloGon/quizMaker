@@ -1,6 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
+  Future<void> getUser(String email, String password) async {
+    var query = FirebaseFirestore.instance
+        .collection("QuizMaker")
+        .where('user', isEqualTo: email)
+        .where('password', isEqualTo: password);
+
+    query.get().then((value) {
+      //print('DEJAMEEEEEE ${value.docs}'); saber como imprimir esto
+    });
+  }
+
   Future<void> createUser(Map userData, String userId) async {
     await FirebaseFirestore.instance
         .collection("QuizMaker")
@@ -37,9 +48,9 @@ class DatabaseService {
     });
   }
 
-  // getQuizData() async{
-  //   return await FirebaseFirestore.instance.collection(@Qu)
-  // }
+  getQuizData() async {
+    return await FirebaseFirestore.instance.collection("Quizes").snapshots();
+  }
 
   // Future<void> addQuizData(Map quizData, String quizId) async {
   //   await FirebaseFirestore.instance.collection(collectionPath)
