@@ -28,16 +28,18 @@ class _HomeState extends State<Home> {
               if (!snapshot.hasData) {
                 return CircularProgressIndicator();
               }
-              print('TAMAÑO' + snapshot.data.documents.lenght);
+              //print('length = ${snapshot.data.docs.length}');
+
               return ListView.builder(
+                shrinkWrap: true,
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (BuildContext context, index) {
-                  print('ALGO' + snapshot.data.docs[index].data["quizTitle"]);
+                  print('ALGO' + snapshot.data.docs[index].data()["quizTitle"]);
                   return QuizTile(
-                    imgUrl: snapshot.data.docs[index].data["quizImgUrl"],
-                    desc: snapshot.data.docs[index].data["quizDescription"],
-                    quizId: snapshot.data.docs[index].data["quizId"],
-                    title: snapshot.data.docs[index].data["quizTitle"],
+                    imgUrl: snapshot.data.docs[index].data()["quizImgUrl"],
+                    desc: snapshot.data.docs[index].data()["quizDescription"],
+                    quizId: snapshot.data.docs[index].data()["quizId"],
+                    title: snapshot.data.docs[index].data()["quizTitle"],
                   );
                 },
               );
