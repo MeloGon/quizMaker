@@ -36,6 +36,7 @@ class _HomeState extends State<Home> {
                 itemBuilder: (BuildContext context, index) {
                   print('ALGO' + snapshot.data.docs[index].data()["quizTitle"]);
                   return QuizTile(
+                    userId: widget.userId,
                     imgUrl: snapshot.data.docs[index].data()["quizImgUrl"],
                     desc: snapshot.data.docs[index].data()["quizDescription"],
                     quizId: snapshot.data.docs[index].data()["quizId"],
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     databaseService.getQuizData(widget.userId).then((value) {
-      print('VATO' + value.toString());
+      //print('VATO' + value.toString());
       setState(() {
         quizStream = value;
       });
@@ -85,20 +86,21 @@ class _HomeState extends State<Home> {
 }
 
 class QuizTile extends StatelessWidget {
+  final String userId;
   final String imgUrl;
   final String title;
   final String desc;
   final String quizId;
-  QuizTile({this.imgUrl, this.title, this.quizId, this.desc});
+  QuizTile({this.userId, this.imgUrl, this.title, this.quizId, this.desc});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlayQuiz(quizId)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PlayQuiz(userId, quizId)));
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         height: 150,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),

@@ -85,6 +85,16 @@ class DatabaseService {
         .snapshots();
   }
 
+  getQuestionData(String userId, String quizId) async {
+    return await FirebaseFirestore.instance
+        .collection("QuizMaker")
+        .doc(userId)
+        .collection("Quizes")
+        .doc(quizId)
+        .collection("QNA")
+        .get();
+  }
+
   // Future<void> addQuizData(Map quizData, String quizId) async {
   //   await FirebaseFirestore.instance.collection(collectionPath)
   // }
