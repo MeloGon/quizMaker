@@ -41,13 +41,23 @@ class _SignInState extends State<SignIn> {
         _isLoading = true;
       });
 
-      await databaseService.getUser(email, password).then((value) {
+      var resp = await databaseService.getUser(email, password);
+      userId = await databaseService.getIdUser(email, password);
+      print(userId);
+      if (resp) {
         setState(() {
           _isLoading = false;
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home(userId)));
         });
-      });
+        toast('Credenciales validados correctamente', Colors.blue[200],
+            Colors.white, 14);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Home(userId)));
+      } else {
+        toast('Credenciales invalidos', Colors.red[200], Colors.white, 14);
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 

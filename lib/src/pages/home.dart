@@ -18,31 +18,40 @@ class _HomeState extends State<Home> {
 
   Widget quizList() {
     return Container(
-      child: StreamBuilder(
-        stream: quizStream,
-        builder: (context, snapshot) {
-          return snapshot.data == null
-              ? Container()
-              : ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context, index) {
-                    return QuizTile(
-                      imgUrl: snapshot.data.documents[index].data["quizImgUrl"],
-                      desc: snapshot
-                          .data.documents[index].data["quizDescription"],
-                      quizId: snapshot.data.documents[index].data["quizId"],
-                      title: snapshot.data.documents[index].data["quizTitle"],
-                    );
-                  },
-                );
-        },
+      width: double.infinity,
+      height: double.infinity,
+      child: Column(
+        children: [
+          StreamBuilder(
+            stream: quizStream,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
+              print('TAMAÑO' + snapshot.data.documents.lenght);
+              return ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (BuildContext context, index) {
+                  print('ALGO' + snapshot.data.docs[index].data["quizTitle"]);
+                  return QuizTile(
+                    imgUrl: snapshot.data.docs[index].data["quizImgUrl"],
+                    desc: snapshot.data.docs[index].data["quizDescription"],
+                    quizId: snapshot.data.docs[index].data["quizId"],
+                    title: snapshot.data.docs[index].data["quizTitle"],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
 
   @override
   void initState() {
-    databaseService.getQuizData().then((value) {
+    databaseService.getQuizData(widget.userId).then((value) {
+      print('VATO' + value.toString());
       setState(() {
         quizStream = value;
       });
@@ -59,9 +68,7 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
         brightness: Brightness.light,
       ),
-      body: Container(
-        child: Column(),
-      ),
+      body: quizList(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
