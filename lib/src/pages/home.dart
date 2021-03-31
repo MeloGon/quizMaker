@@ -29,7 +29,6 @@ class _HomeState extends State<Home> {
                 return CircularProgressIndicator();
               }
               //print('length = ${snapshot.data.docs.length}');
-
               return ListView.builder(
                 shrinkWrap: true,
                 itemCount: snapshot.data.docs.length,

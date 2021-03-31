@@ -77,7 +77,8 @@ class _AddQuestionState extends State<AddQuestion> {
                   children: [
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Enter Question" : null,
-                      decoration: InputDecoration(hintText: "Question"),
+                      decoration:
+                          InputDecoration(hintText: "Enunciado de la Pregunta"),
                       onChanged: (val) {
                         question = val;
                       },
@@ -87,8 +88,8 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option1 " : null,
-                      decoration:
-                          InputDecoration(hintText: "Option1 (Correct Answer)"),
+                      decoration: InputDecoration(
+                          hintText: "Opcion A (Respuesta Correcta)"),
                       onChanged: (val) {
                         option1 = val;
                       },
@@ -98,7 +99,7 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option2 " : null,
-                      decoration: InputDecoration(hintText: "Option2"),
+                      decoration: InputDecoration(hintText: "Opcion B"),
                       onChanged: (val) {
                         option2 = val;
                       },
@@ -108,7 +109,7 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option3 " : null,
-                      decoration: InputDecoration(hintText: "Option3"),
+                      decoration: InputDecoration(hintText: "Opcion C"),
                       onChanged: (val) {
                         option3 = val;
                       },
@@ -118,7 +119,7 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? "Option4 " : null,
-                      decoration: InputDecoration(hintText: "Option4"),
+                      decoration: InputDecoration(hintText: "Opcion D"),
                       onChanged: (val) {
                         option4 = val;
                       },
@@ -142,7 +143,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Text(
-                              "Submit",
+                              "Terminar",
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
@@ -164,7 +165,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Text(
-                              "Add Question",
+                              "Añadir Pregunta",
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/models/questionmodel.dart';
+import 'package:quizmaker_app/src/pages/results.dart';
 import 'package:quizmaker_app/src/services/database.dart';
 import 'package:quizmaker_app/src/widgets/quiz_play_widgets.dart';
 import 'package:quizmaker_app/src/widgets/widgets.dart';
@@ -65,28 +66,43 @@ class _PlayQuizState extends State<PlayQuiz> {
         brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black54),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            questionSnapshot == null
-                ? Container(
-                    child: CircularProgressIndicator(),
-                  )
-                : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: questionSnapshot.docs.length,
-                    itemBuilder: (context, index) {
-                      return PlayQuizTile(
-                        questionModel: getQuestionModelFromDataSnapshot(
-                            questionSnapshot.docs[index]),
-                        index: index,
-                      );
-                    },
-                  )
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              questionSnapshot == null
+                  ? Container(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: questionSnapshot.docs.length,
+                      itemBuilder: (context, index) {
+                        return PlayQuizTile(
+                          questionModel: getQuestionModelFromDataSnapshot(
+                              questionSnapshot.docs[index]),
+                          index: index,
+                        );
+                      },
+                    )
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.check),
+        onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Results(
+                        correct: _correct,
+                        incorrect: _incorrect,
+                        total: total,
+                      )));
+        },
       ),
     );
   }
@@ -125,7 +141,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
                   optionSelected = widget.questionModel.option1;
                   widget.questionModel.answered = true;
                   _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
+                  _notAttempted = _notAttempted + 1;
                   setState(() {});
                 } else {
                   optionSelected = widget.questionModel.option1;
@@ -156,7 +172,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
                   optionSelected = widget.questionModel.option2;
                   widget.questionModel.answered = true;
                   _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
+                  _notAttempted = _notAttempted + 1;
                   setState(() {});
                 } else {
                   optionSelected = widget.questionModel.option2;
@@ -187,7 +203,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
                   optionSelected = widget.questionModel.option3;
                   widget.questionModel.answered = true;
                   _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
+                  _notAttempted = _notAttempted + 1;
                   setState(() {});
                 } else {
                   optionSelected = widget.questionModel.option3;
@@ -218,7 +234,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
                   optionSelected = widget.questionModel.option4;
                   widget.questionModel.answered = true;
                   _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
+                  _notAttempted = _notAttempted + 1;
                   setState(() {});
                 } else {
                   optionSelected = widget.questionModel.option4;
