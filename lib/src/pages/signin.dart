@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/pages/signup.dart';
 import 'package:quizmaker_app/src/services/database.dart';
+import 'package:quizmaker_app/src/widgets/card_bg.dart';
 import 'package:quizmaker_app/src/widgets/widgets.dart';
 
 import '../services/auth.dart';
@@ -63,6 +66,8 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: appBar(context),
@@ -78,80 +83,181 @@ class _SignInState extends State<SignIn> {
             )
           : Form(
               key: _formKey,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
-                  children: [
-                    Spacer(),
-                    TextFormField(
-                      validator: (value) {
-                        return value.isEmpty
-                            ? "Ingrese un Usuario correcto"
-                            : null;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Usuario",
-                        suffixIcon: Icon(Icons.supervised_user_circle_outlined),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Transform.rotate(
+                      angle: pi / 15,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xff00BFA6),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                        ),
+                        width: width * 0.78,
+                        height: height * 0.43,
                       ),
-                      onChanged: (value) {
-                        email = value;
-                      },
                     ),
-                    SizedBox(height: 6.0),
-                    TextFormField(
-                      obscureText: true,
-                      validator: (value) {
-                        return value.isEmpty
-                            ? "Ingrese la contraseña correcta"
-                            : null;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Contraseña",
-                        suffixIcon: Icon(Icons.lock),
-                      ),
-                      onChanged: (value) {
-                        password = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              signIn(email, password);
-                            },
-                            child: Text('Ingresar'))),
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Row(
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("No tienes una cuenta aun ? "),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUp()));
-                          },
-                          child: Text(
-                            "Registrarse",
-                            style:
-                                TextStyle(decoration: TextDecoration.underline),
+                        Container(
+                          width: width * 0.85,
+                          height: height * 0.43,
+                          margin: EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            elevation: 10,
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.only(right: 30, left: 30, top: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Correo :'),
+                                  SizedBox(height: 6.0),
+                                  TextFormField(
+                                    validator: (value) {
+                                      return value.isEmpty
+                                          ? "Ingrese un Usuario correcto"
+                                          : null;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      fillColor:
+                                          Color(0xffAAAAAA).withOpacity(0.29),
+                                      filled: true,
+                                      hintText: "example@example.com",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                    ),
+                                    onChanged: (value) {
+                                      email = value;
+                                    },
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text('Contrasena :'),
+                                  SizedBox(height: 6.0),
+                                  TextFormField(
+                                    obscureText: true,
+                                    validator: (value) {
+                                      return value.isEmpty
+                                          ? "Ingrese la contraseña correcta"
+                                          : null;
+                                    },
+                                    decoration: InputDecoration(
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      border: InputBorder.none,
+                                      fillColor:
+                                          Color(0xffAAAAAA).withOpacity(0.29),
+                                      filled: true,
+                                      hintText: "**********",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                    ),
+                                    onChanged: (value) {
+                                      password = value;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 14,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                        value: true,
+                                        onChanged: (value) {},
+                                      ),
+                                      Text('Recordar Contrasena')
+                                    ],
+                                  ),
+                                  Container(
+                                    width: width,
+                                    child: FloatingActionButton(
+                                      backgroundColor: Color(0xff00BFA6),
+                                      onPressed: () {
+                                        signIn(email, password);
+                                      },
+                                      child: Icon(Icons.arrow_forward),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 14,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        )
+                        ),
+                        //
                       ],
                     ),
-                    SizedBox(
-                      height: 60,
-                    )
-                  ],
-                ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 55,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Olvidaste tu contrasena "),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUp()));
+                                },
+                                child: Text(
+                                  "Pulsa aqui",
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Color(0xff00BFA6)),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("No tienes una cuenta aun ? "),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUp()));
+                                },
+                                child: Text(
+                                  "Registrarse",
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Color(0xff00BFA6)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
     );

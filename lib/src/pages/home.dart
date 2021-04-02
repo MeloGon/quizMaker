@@ -69,9 +69,17 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         brightness: Brightness.light,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+            color: Colors.grey,
+          )
+        ],
       ),
       body: quizList(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xff00BFA6),
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(
