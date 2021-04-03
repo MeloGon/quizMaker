@@ -73,110 +73,183 @@ class _AddQuestionState extends State<AddQuestion> {
               key: _formKey,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? "Enter Question" : null,
-                      decoration:
-                          InputDecoration(hintText: "Enunciado de la Pregunta"),
-                      onChanged: (val) {
-                        question = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? "Option1 " : null,
-                      decoration: InputDecoration(
-                          hintText: "Opcion A (Respuesta Correcta)"),
-                      onChanged: (val) {
-                        option1 = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? "Option2 " : null,
-                      decoration: InputDecoration(hintText: "Opcion B"),
-                      onChanged: (val) {
-                        option2 = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? "Option3 " : null,
-                      decoration: InputDecoration(hintText: "Opcion C"),
-                      onChanged: (val) {
-                        option3 = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? "Option4 " : null,
-                      decoration: InputDecoration(hintText: "Opcion D"),
-                      onChanged: (val) {
-                        option4 = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width / 2 - 20,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Text(
-                              "Terminar",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: SizedBox(
+                            width: 10,
+                          )),
+                          Text(
+                            'Contenido del Quiz',
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Enunciado de la Pregunta :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? "Ingrese el enunciado" : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: "Ingrese enunciado"),
+                        onChanged: (val) {
+                          question = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('Opcion A (Respuesta Correcta) :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? "Ingrese la opcion" : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: "Opcion A y la vez respuesta correcta"),
+                        onChanged: (val) {
+                          option1 = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('Opcion B :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? "Ingrese la opcion" : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: "Opcion B"),
+                        onChanged: (val) {
+                          option2 = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('Opcion C :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? "Ingrese la opcion" : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: "Opcion C"),
+                        onChanged: (val) {
+                          option3 = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('Opcion D :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? "Ingrese la opcion" : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: "Opcion D"),
+                        onChanged: (val) {
+                          option4 = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xff00BFA6),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Terminar'),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            uploadQuizData();
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width / 2 - 40,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Text(
-                              "Añadir Pregunta",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Container(
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xff00BFA6),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  uploadQuizData();
+                                },
+                                child: Text('Anadir Pregunta'),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 60,
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

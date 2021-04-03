@@ -64,61 +64,124 @@ class _CreateQuizState extends State<CreateQuiz> {
               key: _formKey,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      validator: (value) => value.isEmpty
-                          ? 'Ingresa una iamgen para el Quiz'
-                          : null,
-                      decoration: InputDecoration(
-                          hintText: 'Url de la imagen del Quizz'),
-                      onChanged: (value) {
-                        quizImageUrl = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    TextFormField(
-                      validator: (value) => value.isEmpty
-                          ? 'Ingresa un titulo para el Quiz'
-                          : null,
-                      decoration:
-                          InputDecoration(hintText: 'Titulo para el Quizz'),
-                      onChanged: (value) {
-                        quizTitle = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    TextFormField(
-                      validator: (value) => value.isEmpty
-                          ? 'Ingresa una descripcion para el Quiz'
-                          : null,
-                      decoration:
-                          InputDecoration(hintText: 'Descripcion del Quizz'),
-                      onChanged: (value) {
-                        quizDescription = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    Spacer(),
-                    Container(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          addQuiz();
-                        },
-                        child: Text('Crear Quiz'),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: SizedBox(
+                            width: 10,
+                          )),
+                          Text(
+                            'Crear Quiz',
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                    )
-                  ],
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Url de la imagen para el quiz :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (value) => value.isEmpty
+                            ? 'Ingresa una iamgen para el Quiz'
+                            : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: 'ejemplo: https://imagen.jpg',
+                            suffixIcon: Icon(Icons.link)),
+                        onChanged: (value) {
+                          quizImageUrl = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('Titulo para el Quiz :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (value) => value.isEmpty
+                            ? 'Ingresa un titulo para el Quiz'
+                            : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: 'ejemplo: Quiz de Arte',
+                            suffixIcon: Icon(Icons.line_style)),
+                        onChanged: (value) {
+                          quizTitle = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('Descripcion del Quiz :'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        validator: (value) => value.isEmpty
+                            ? 'Ingresa una descripcion para el Quiz'
+                            : null,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            fillColor: Color(0xffAAAAAA).withOpacity(0.29),
+                            filled: true,
+                            hintText: 'ejemplo: Perspectiva',
+                            suffixIcon: Icon(Icons.subject_rounded)),
+                        onChanged: (value) {
+                          quizDescription = value;
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        child: Image.asset('assets/images/test_online.png'),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff00BFA6),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                          ),
+                          onPressed: () {
+                            addQuiz();
+                          },
+                          child: Text('Crear Quiz'),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

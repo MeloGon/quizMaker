@@ -22,6 +22,15 @@ class _HomeState extends State<Home> {
       height: double.infinity,
       child: Column(
         children: [
+          Container(
+            padding: EdgeInsets.only(right: 25),
+            width: double.infinity,
+            alignment: Alignment.topRight,
+            child: Text(
+              'Lista de Quiz',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
           StreamBuilder(
             stream: quizStream,
             builder: (context, snapshot) {

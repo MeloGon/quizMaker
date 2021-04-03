@@ -7,15 +7,15 @@ Widget appBar(BuildContext context) {
     TextSpan(
         text: 'Quiz',
         style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Color(0xff00BFA6),
-        )),
+            fontWeight: FontWeight.bold,
+            color: Color(0xff00BFA6),
+            fontFamily: 'Medium')),
     TextSpan(
         text: 'Triv',
         style: TextStyle(
-          fontWeight: FontWeight.w500,
-          color: Colors.black54,
-        )),
+            fontWeight: FontWeight.w500,
+            color: Colors.black54,
+            fontFamily: 'Regular')),
   ]));
 }
 
@@ -23,7 +23,7 @@ toast(String message, Color bgColor, Color txColor, double fontSize) {
   return Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 1,
       backgroundColor: bgColor,
       textColor: txColor,
