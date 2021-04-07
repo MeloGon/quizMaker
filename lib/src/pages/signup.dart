@@ -20,28 +20,43 @@ class _SignUpState extends State<SignUp> {
   AuthService authService = new AuthService();
   DatabaseService databaseService = new DatabaseService();
   bool _isLoading = false;
+  int _radioValue = 0;
+  String typeUser = "";
 
   signUp() async {
-    if (_formKey.currentState.validate()) {
+    setState(() {
+      _isLoading = true;
+    });
+    userId = randomAlphaNumeric(16);
+    Map<String, String> userMap = {
+      "password": password,
+      "type": typeUser,
+      "user": email,
+      "userId": userId,
+      "username": name,
+    };
+    await databaseService.createUser(userMap, userId).then((value) {
       setState(() {
-        _isLoading = true;
+        _isLoading = false;
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => Home(userId, typeUser)));
       });
-      userId = randomAlphaNumeric(16);
-      Map<String, String> userMap = {
-        "password": password,
-        "type": "alumno",
-        "user": email,
-        "userId": userId,
-        "username": name,
-      };
-      await databaseService.createUser(userMap, userId).then((value) {
-        setState(() {
-          _isLoading = false;
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home(userId)));
-        });
-      });
-    }
+    });
+  }
+
+  void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+
+      switch (_radioValue) {
+        case 1:
+          typeUser = "Profesor";
+          break;
+        case 2:
+          typeUser = "Alumno";
+          break;
+      }
+    });
   }
 
   //this kind of sifn up is if we work with firebase authentication
@@ -126,7 +141,7 @@ class _SignUpState extends State<SignUp> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Correo :',
+                                  'Nombre Completo :',
                                   style: TextStyle(fontFamily: 'Medium'),
                                 ),
                                 SizedBox(height: 6.0),
@@ -137,7 +152,16 @@ class _SignUpState extends State<SignUp> {
                                         : null;
                                   },
                                   decoration: InputDecoration(
-                                    hintText: "Nombre",
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    fillColor:
+                                        Color(0xffAAAAAA).withOpacity(0.29),
+                                    filled: true,
+                                    hintText: "Jhon Doe",
+                                    hintStyle: TextStyle(color: Colors.grey),
                                   ),
                                   onChanged: (value) {
                                     name = value;
@@ -145,7 +169,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 SizedBox(height: 10.0),
                                 Text(
-                                  'Contrasena :',
+                                  'Correo de Usuario :',
                                   style: TextStyle(fontFamily: 'Medium'),
                                 ),
                                 SizedBox(height: 6.0),
@@ -156,7 +180,16 @@ class _SignUpState extends State<SignUp> {
                                         : null;
                                   },
                                   decoration: InputDecoration(
-                                    hintText: "Usuario",
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    fillColor:
+                                        Color(0xffAAAAAA).withOpacity(0.29),
+                                    filled: true,
+                                    hintText: "correo@example.com",
+                                    hintStyle: TextStyle(color: Colors.grey),
                                   ),
                                   onChanged: (value) {
                                     email = value;
@@ -176,7 +209,16 @@ class _SignUpState extends State<SignUp> {
                                         : null;
                                   },
                                   decoration: InputDecoration(
-                                    hintText: "Contraseña",
+                                    hintText: "********",
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    fillColor:
+                                        Color(0xffAAAAAA).withOpacity(0.29),
+                                    filled: true,
+                                    hintStyle: TextStyle(color: Colors.grey),
                                   ),
                                   onChanged: (value) {
                                     password = value;
@@ -185,18 +227,24 @@ class _SignUpState extends State<SignUp> {
                                 SizedBox(
                                   height: 14,
                                 ),
-                                Container(
-                                    width: width,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Color(0xff00BFA6),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                        child: Text('Registrarme'))),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      activeColor: Color(0xff00BFA6),
+                                      value: 1,
+                                      groupValue: _radioValue,
+                                      onChanged: _handleRadioValueChange,
+                                    ),
+                                    Text('Profesor'),
+                                    Radio(
+                                      activeColor: Color(0xff00BFA6),
+                                      value: 2,
+                                      groupValue: _radioValue,
+                                      onChanged: _handleRadioValueChange,
+                                    ),
+                                    Text('Alumno'),
+                                  ],
+                                ),
                                 SizedBox(
                                   height: 14,
                                 ),
@@ -207,6 +255,25 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   ),
+                ),
+                Container(
+                    width: width * .5,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xff00BFA6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          signUp();
+                        },
+                        child: Text(
+                          'Registrarme',
+                          style: TextStyle(fontFamily: 'SemiBold'),
+                        ))),
+                SizedBox(
+                  height: 20,
                 ),
                 Container(
                     height: height * 0.1,

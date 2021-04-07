@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/pages/create_quizz.dart';
 import 'package:quizmaker_app/src/pages/play_quiz.dart';
+import 'package:quizmaker_app/src/pages/signin.dart';
 import 'package:quizmaker_app/src/services/database.dart';
 
 import '../widgets/widgets.dart';
 
 class Home extends StatefulWidget {
   final String userId;
-  Home(this.userId);
+  final String typeUser;
+  Home(this.userId, this.typeUser);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -28,7 +30,8 @@ class _HomeState extends State<Home> {
             alignment: Alignment.topRight,
             child: Text(
               'Lista de Quiz',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  fontSize: 20, fontFamily: 'SemiBold', color: Colors.black54),
             ),
           ),
           StreamBuilder(
@@ -79,14 +82,25 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
         brightness: Brightness.light,
         actions: [
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-            color: Colors.grey,
-          )
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => SignIn()),
+                    (Route<dynamic> route) => false);
+              },
+              child: Text(
+                'Cerrar Sesion',
+                style:
+                    TextStyle(fontFamily: 'Regular', color: Color(0xff00BFA6)),
+              ))
         ],
       ),
       body: quizList(),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Container(height: 50.0),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xff00BFA6),
         child: Icon(Icons.add),

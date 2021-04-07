@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:quizmaker_app/src/pages/signup.dart';
+import 'package:quizmaker_app/src/pages/target_quizz.dart';
 import 'package:quizmaker_app/src/services/database.dart';
 
 import 'package:quizmaker_app/src/widgets/widgets.dart';
@@ -17,13 +18,14 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
-  String email, password, userId;
+  String email, password, userId, typeUser;
   TextEditingController txtEmail = new TextEditingController();
   TextEditingController txtPass = new TextEditingController();
   AuthService authService = new AuthService();
   DatabaseService databaseService = new DatabaseService();
   bool _isLoading = false;
   bool isCheck = false;
+  List<String> data = new List<String>();
 
   // signIn() async {
   //   if (_formKey.currentState.validate()) {
@@ -53,16 +55,27 @@ class _SignInState extends State<SignIn> {
       });
 
       var resp = await databaseService.getUser(email, password);
-      userId = await databaseService.getIdUser(email, password);
-      print(userId);
+      data = await databaseService.getIdAndTypeUser(email, password);
+      userId = data[0];
+      typeUser = data[1];
+
+      //print('tipo de usuario:' + data[1]);
+      //userId = await databaseService.getIdUser(email, password);
+      //print(userId);
+
       if (resp) {
         setState(() {
           _isLoading = false;
         });
         toast('Credenciales validados correctamente', Colors.blue[200],
             Colors.white, 14);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Home(userId)));
+        if (typeUser == "Alumno") {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => TargetQuiz()));
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => Home(userId, typeUser)));
+        }
       } else {
         toast('Credenciales invalidos', Colors.red[200], Colors.white, 14);
         setState(() {
@@ -106,7 +119,10 @@ class _SignInState extends State<SignIn> {
                   child: Text(
                     'Loguin',
                     textAlign: TextAlign.right,
-                    style: TextStyle(fontSize: 20, fontFamily: 'Medium'),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'SemiBold',
+                        color: Colors.black54),
                   ),
                 ),
                 Container(

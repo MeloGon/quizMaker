@@ -41,6 +41,25 @@ class DatabaseService {
     return id;
   }
 
+  Future getIdAndTypeUser(String email, String password) async {
+    List<String> data = new List<String>();
+
+    await FirebaseFirestore.instance
+        .collection("QuizMaker")
+        .where('user', isEqualTo: email)
+        .where('password', isEqualTo: password)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        //print('ELEMENTO' + element["userId"]);
+        data.add(element["userId"]);
+        data.add(element["type"]);
+      });
+    });
+
+    return data;
+  }
+
   Future<void> createUser(Map userData, String userId) async {
     await FirebaseFirestore.instance
         .collection("QuizMaker")
@@ -89,6 +108,16 @@ class DatabaseService {
     return await FirebaseFirestore.instance
         .collection("QuizMaker")
         .doc(userId)
+        .collection("Quizes")
+        .doc(quizId)
+        .collection("QNA")
+        .get();
+  }
+
+  getQuestionDataforAlumn(String teacherId, String quizId) async {
+    return await FirebaseFirestore.instance
+        .collection("QuizMaker")
+        .doc(teacherId)
         .collection("Quizes")
         .doc(quizId)
         .collection("QNA")
