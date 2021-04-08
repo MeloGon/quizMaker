@@ -83,16 +83,16 @@ class _HomeState extends State<Home> {
         brightness: Brightness.light,
         actions: [
           TextButton(
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => SignIn()),
-                    (Route<dynamic> route) => false);
-              },
-              child: Text(
-                'Cerrar Sesion',
-                style:
-                    TextStyle(fontFamily: 'Regular', color: Color(0xff00BFA6)),
-              ))
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => SignIn()),
+                  (Route<dynamic> route) => false);
+            },
+            child: Text(
+              'Cerrar Sesion',
+              style: TextStyle(fontFamily: 'Regular', color: Color(0xff00BFA6)),
+            ),
+          )
         ],
       ),
       body: quizList(),
