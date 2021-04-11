@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/pages/play_quiz.dart';
+import 'package:quizmaker_app/src/pages/signin.dart';
 
 import 'package:quizmaker_app/src/widgets/widgets.dart';
 
@@ -20,8 +21,22 @@ class _TargetQuizState extends State<TargetQuiz> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         brightness: Brightness.light,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => SignIn()),
+                  (Route<dynamic> route) => false);
+            },
+            child: Text(
+              'Cerrar Sesion',
+              style: TextStyle(fontFamily: 'Regular', color: Color(0xff00BFA6)),
+            ),
+          ),
+        ],
       ),
       body: Container(
+        color: Colors.white,
         width: double.infinity,
         height: double.infinity,
         child: Padding(
@@ -64,22 +79,34 @@ class _TargetQuizState extends State<TargetQuiz> {
               SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xff00BFA6),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
+              Container(
+                width: MediaQuery.of(context).size.width * .5,
+                height: 50,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xff00BFA6),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
+                    onPressed: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               PlayQuiz(txtTeacherId.text, txtQuizId.text),
-                        ));
-                  },
-                  child: Text('Comenzar Quiz'))
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Comenzar Quiz',
+                      style: TextStyle(fontFamily: 'SemiBold'),
+                    )),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 30.0),
+                child: Image.asset('assets/images/searching.png'),
+              ),
             ],
           ),
         ),
