@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker_app/src/pages/create_quizz.dart';
 import 'package:quizmaker_app/src/pages/play_quiz.dart';
@@ -126,8 +128,86 @@ class QuizTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PlayQuiz(userId, quizId)));
+        AwesomeDialog(
+          context: context,
+          keyboardAware: true,
+          dismissOnBackKeyPress: true,
+          dialogType: DialogType.QUESTION,
+          animType: AnimType.BOTTOMSLIDE,
+          btnCancelText: "VER QUIZ",
+          btnOkText: "OK",
+          title: 'Que deseas realizar?',
+          padding: const EdgeInsets.all(16.0),
+          desc:
+              'Si deseas ver tu codigo de profesor y el codigo del quiz presiona OK. Si deseas visualizar el quiz presiona VER QUIZ',
+          btnCancelOnPress: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PlayQuiz(userId, quizId)));
+          },
+          btnOkOnPress: () {
+            AwesomeDialog dialog;
+            dialog = AwesomeDialog(
+              context: context,
+              animType: AnimType.TOPSLIDE,
+              dialogType: DialogType.INFO,
+              keyboardAware: true,
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text('Tu id de Profesor es: $userId'),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xff00BFA6),
+                      ),
+                      child: Text('Copiar Id Profesor'),
+                      onPressed: () {
+                        ClipboardManager.copyToClipBoard("$userId")
+                            .then((result) {
+                          final snackBar = SnackBar(
+                            content: Text('Copiado al Portapeles'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        });
+                      },
+                    ),
+                    Text('El id de tu Quiz es: $quizId'),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xff00BFA6),
+                      ),
+                      child: Text('Copiar Id de Quiz'),
+                      onPressed: () {
+                        ClipboardManager.copyToClipBoard("$quizId")
+                            .then((result) {
+                          final snackBar = SnackBar(
+                            content: Text('Copiado al Portapeles'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                          );
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            )..show();
+          },
+        ).show();
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => PlayQuiz(userId, quizId)));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),

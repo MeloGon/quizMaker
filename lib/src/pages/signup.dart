@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:quizmaker_app/src/pages/signin.dart';
+import 'package:quizmaker_app/src/pages/target_quizz.dart';
 import 'package:quizmaker_app/src/services/database.dart';
 import 'package:quizmaker_app/src/widgets/widgets.dart';
 import 'package:random_string/random_string.dart';
@@ -24,24 +25,40 @@ class _SignUpState extends State<SignUp> {
   String typeUser = "";
 
   signUp() async {
-    setState(() {
-      _isLoading = true;
-    });
-    userId = randomAlphaNumeric(16);
-    Map<String, String> userMap = {
-      "password": password,
-      "type": typeUser,
-      "user": email,
-      "userId": userId,
-      "username": name,
-    };
-    await databaseService.createUser(userMap, userId).then((value) {
+    if (email == "" || password == "" || name == "" || typeUser == "") {
+      toast('Llene todos los campos. Porfavor', Colors.grey[200], Colors.black,
+          14);
+    } else {
       setState(() {
-        _isLoading = false;
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => Home(userId, typeUser)));
+        _isLoading = true;
       });
-    });
+      userId = randomAlphaNumeric(16);
+      Map<String, String> userMap = {
+        "password": password,
+        "type": typeUser,
+        "user": email,
+        "userId": userId,
+        "username": name,
+      };
+      await databaseService.createUser(userMap, userId).then((value) {
+        setState(() {
+          _isLoading = false;
+          if (typeUser == "Profesor") {
+            toast('Usuario creado correctamente', Colors.blue[200],
+                Colors.white, 14);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Home(userId, typeUser)));
+          } else {
+            toast('Usuario creado correctamente', Colors.blue[200],
+                Colors.white, 14);
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => TargetQuiz()));
+          }
+        });
+      });
+    }
   }
 
   void _handleRadioValueChange(int value) {

@@ -7,6 +7,7 @@ import 'package:quizmaker_app/src/pages/target_quizz.dart';
 import 'package:quizmaker_app/src/services/database.dart';
 
 import 'package:quizmaker_app/src/widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth.dart';
 import 'home.dart';
@@ -26,6 +27,19 @@ class _SignInState extends State<SignIn> {
   bool _isLoading = false;
   bool isCheck = false;
   List<String> data = new List<String>();
+
+  @override
+  void initState() {
+    cargarPref();
+    super.initState();
+  }
+
+  cargarPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    txtEmail = TextEditingController(text: prefs.get('correo'));
+    txtPass = TextEditingController(text: prefs.get('pwd'));
+    setState(() {});
+  }
 
   // signIn() async {
   //   if (_formKey.currentState.validate()) {
@@ -56,8 +70,8 @@ class _SignInState extends State<SignIn> {
 
       var resp = await databaseService.getUser(email, password);
       data = await databaseService.getIdAndTypeUser(email, password);
-      userId = data[0];
-      typeUser = data[1];
+      userId = data.isEmpty ? 'null' : data[0];
+      typeUser = data.isEmpty ? 'null' : data[1];
 
       //print('tipo de usuario:' + data[1]);
       //userId = await databaseService.getIdUser(email, password);
@@ -67,14 +81,23 @@ class _SignInState extends State<SignIn> {
         setState(() {
           _isLoading = false;
         });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('correo', email);
+        prefs.setString('pwd', password);
         toast('Credenciales validados correctamente', Colors.blue[200],
             Colors.white, 14);
         if (typeUser == "Alumno") {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => TargetQuiz()));
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => Home(userId, typeUser)));
+          if (userId == 'null' || typeUser == 'null') {
+            toast("El usuario no existe", Colors.orange[200], Colors.white, 14);
+          } else {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Home(userId, typeUser)));
+          }
         }
       } else {
         toast('Credenciales invalidos', Colors.red[200], Colors.white, 14);
@@ -108,6 +131,7 @@ class _SignInState extends State<SignIn> {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             width: width,
@@ -127,7 +151,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 50),
-                  height: height * 0.6,
+                  height: height * 0.56,
                   child: Stack(
                     children: [
                       Container(
@@ -147,7 +171,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       Container(
                         width: width * 0.76,
-                        height: height * 0.43,
+                        height: height * 0.45,
                         child: Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
@@ -269,7 +293,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 Container(
-                    height: height * 0.1,
+                    height: height * 0.08,
                     child: Column(
                       children: [
                         Row(
