@@ -167,7 +167,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
             onTap: () {
               if (!widget.questionModel.answered) {
                 //correct
-                if (widget.questionModel.option1 ==
+                if (widget.questionModel.option2 ==
                     widget.questionModel.correctOption) {
                   optionSelected = widget.questionModel.option2;
                   widget.questionModel.answered = true;
@@ -198,7 +198,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
             onTap: () {
               if (!widget.questionModel.answered) {
                 //correct
-                if (widget.questionModel.option1 ==
+                if (widget.questionModel.option3 ==
                     widget.questionModel.correctOption) {
                   optionSelected = widget.questionModel.option3;
                   widget.questionModel.answered = true;
@@ -229,7 +229,7 @@ class _PlayQuizTileState extends State<PlayQuizTile> {
             onTap: () {
               if (!widget.questionModel.answered) {
                 //correct
-                if (widget.questionModel.option1 ==
+                if (widget.questionModel.option4 ==
                     widget.questionModel.correctOption) {
                   optionSelected = widget.questionModel.option4;
                   widget.questionModel.answered = true;
