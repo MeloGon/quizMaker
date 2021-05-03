@@ -42,21 +42,34 @@ class _HomeState extends State<Home> {
               if (!snapshot.hasData) {
                 return CircularProgressIndicator();
               }
-              //print('length = ${snapshot.data.docs.length}');
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (BuildContext context, index) {
-                  print('ALGO' + snapshot.data.docs[index].data()["quizTitle"]);
-                  return QuizTile(
-                    userId: widget.userId,
-                    imgUrl: snapshot.data.docs[index].data()["quizImgUrl"],
-                    desc: snapshot.data.docs[index].data()["quizDescription"],
-                    quizId: snapshot.data.docs[index].data()["quizId"],
-                    title: snapshot.data.docs[index].data()["quizTitle"],
-                  );
-                },
-              );
+              if (snapshot.data.docs.length == 0) {
+                return Center(
+                  child: Text(
+                    "Aun no has creado algun Quiz, que esperas presiona en el boton de abajo. Sin miedo al exito",
+                    style: TextStyle(
+                        fontSize: 15.5,
+                        fontFamily: 'SemiBold',
+                        color: Colors.black54),
+                  ),
+                );
+              } else {
+//print('length = ${snapshot.data.docs.length}');
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (BuildContext context, index) {
+                    print(
+                        'ALGO' + snapshot.data.docs[index].data()["quizTitle"]);
+                    return QuizTile(
+                      userId: widget.userId,
+                      imgUrl: snapshot.data.docs[index].data()["quizImgUrl"],
+                      desc: snapshot.data.docs[index].data()["quizDescription"],
+                      quizId: snapshot.data.docs[index].data()["quizId"],
+                      title: snapshot.data.docs[index].data()["quizTitle"],
+                    );
+                  },
+                );
+              }
             },
           ),
         ],
