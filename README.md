@@ -1,6 +1,22 @@
-# quizmaker_app
+# QuizTriv
 
-A new Flutter project.
+Esta es una aplicacion hecha en flutter realizada para poder crear mini pruebzas (quizes) que ahora en tiempo de pandemia por la educacion a distancia puede resultar util,
+cuenta con un perfil de docente el cual puede crear ademas de visualizar previamente el quiz y el perfil de estudiante que unicamente puede resolver dicho quiz y recibir su nota.
+
+# Tecnologia usada
+
+La aplicacion tiene una integracion con firestore, tiene paquetes como lottie de iconos animados, shotoast, entre otros, no integra el uso de gestores de estado, pueda que necesite algunas migraciones a Null Safety por la actualizaciones de flutter
+
+# Capturas de pantalla
+
+<img src="https://user-images.githubusercontent.com/40903405/127670499-6ff82fcc-98ca-4328-a8e4-48ef7a8ccd9c.jpeg" width="25%" height="25%"> |
+<img src="https://user-images.githubusercontent.com/40903405/127670548-8e2a4d04-9c19-43c3-b812-05f9134cfe6d.jpeg" width="25%" height="25%"> |
+<img src="https://user-images.githubusercontent.com/40903405/127670559-c7d89957-9e24-4d65-b75b-1f5c6fae8aa2.jpeg" width="25%" height="25%"> |
+<img src="https://user-images.githubusercontent.com/40903405/127670589-e854a975-c23d-497e-aea0-4436e672b244.jpeg" width="25%" height="25%"> |
+<img src="https://user-images.githubusercontent.com/40903405/127670601-7a74d6b8-8774-4750-a672-f466ea018c41.jpeg" width="25%" height="25%"> |
+<img src="https://user-images.githubusercontent.com/40903405/127670612-ff262713-ac9c-4320-bff4-3fce127755e8.jpeg" width="25%" height="25%"> |
+<img src="https://user-images.githubusercontent.com/40903405/127670621-6140ae14-5967-47a5-adc7-aab2c6b8f84c.jpeg" width="25%" height="25%"> |
+
 
 ## Getting Started
 
