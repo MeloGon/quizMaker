@@ -3,9 +3,14 @@
 Esta es una aplicacion hecha en flutter realizada para poder crear mini pruebzas (quizes) que ahora en tiempo de pandemia por la educacion a distancia puede resultar util,
 cuenta con un perfil de docente el cual puede crear ademas de visualizar previamente el quiz y el perfil de estudiante que unicamente puede resolver dicho quiz y recibir su nota.
 
+This is an application made in flutter made to be able to create mini tests (perhaps) that now in times of pandemic by distance education can be useful,
+It has a teacher profile which you can create in addition to previewing the quiz and the student profile that can only solve said quiz and receive your grade.
+
 # Tecnologia usada
 
 La aplicacion tiene una integracion con firestore, tiene paquetes como lottie de iconos animados, shotoast, entre otros, no integra el uso de gestores de estado, pueda que necesite algunas migraciones a Null Safety por la actualizaciones de flutter
+
+The application has an integration with firestore, it has packages such as lottie of animated icons, shotoast, among others, it does not integrate the use of status managers, it may need some migrations to Null Safety due to the flutter updates
 
 # Capturas de pantalla
 
